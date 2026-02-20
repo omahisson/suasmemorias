@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Titulo from "../../../compartilhado/componentes/Tipografia/Titulo.jsx";
 import Subtitulo from "../../../compartilhado/componentes/Tipografia/Subtitulo.jsx";
@@ -6,23 +5,15 @@ import CampoTexto from "../../../compartilhado/componentes/CampoTexto/CampoTexto
 import Botao from "../../../compartilhado/componentes/Botao/Botao.jsx";
 import Card from "../../../compartilhado/componentes/Card/Card.jsx";
 import SetaEsquerda from "../../../compartilhado/componentes/Icones/SetaEsquerda.jsx";
+import { useRecuperarSenha } from "../../../funcionalidades/autenticacao/hooks/useRecuperarSenha.js";
 
 export default function PaginaNovaSenha() {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [carregando, setCarregando] = useState(false);
-  const [erro, setErro] = useState("");
-  const [sucesso, setSucesso] = useState(false);
+  const { email, setEmail, carregando, erro, sucesso, enviar } = useRecuperarSenha();
 
   async function onSubmit(e) {
     e.preventDefault();
-    setErro("");
-    setCarregando(true);
-
-    setTimeout(() => {
-      setCarregando(false);
-      setSucesso(true);
-    }, 1500);
+    await enviar();
   }
 
   if (sucesso) {
@@ -36,7 +27,7 @@ export default function PaginaNovaSenha() {
             </Subtitulo>
             <Botao onClick={() => navigate("/login")}>
               <span style={{ display: "flex", alignItems: "center", gap: "8px", justifyContent: "center" }}>
-                <SetaEsquerda width={16} height={16} cor="rgb(60, 60, 60)" />
+                <SetaEsquerda width={16} height={16} cor="rgb(255, 255, 255)" />
                 Voltar para o login
               </span>
             </Botao>
@@ -64,7 +55,7 @@ export default function PaginaNovaSenha() {
             tipo="email"
           />
 
-          {erro ? <div style={{ color: "crimson", fontSize: 13 }}>{erro}</div> : null}
+          {erro ? <Subtitulo><div style={{ color: "crimson", fontSize: 15 }}>{erro}</div></Subtitulo> : null}
 
           <Botao type="submit" disabled={carregando}>
             {carregando ? "Enviando..." : "Enviar link de recuperação"}

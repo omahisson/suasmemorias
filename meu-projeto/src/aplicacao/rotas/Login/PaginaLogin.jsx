@@ -14,7 +14,7 @@ export default function PaginaLogin() {
     e.preventDefault();
     const r = await entrar();
     if (r) {
-      alert(`Login ${r.user.email}`);
+      navigate("/home");
     }
   }
 
