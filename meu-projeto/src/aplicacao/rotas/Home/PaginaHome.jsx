@@ -2,14 +2,12 @@ import { useState, useRef } from "react";
 import Continue from "../../../compartilhado/componentes/Continue/Continue.jsx";
 import NomeMateria from "../../../compartilhado/componentes/NomeMateria/NomeMateria.jsx";
 import Baralhos from "../../../compartilhado/componentes/Baralhos/Baralhos.jsx";
-import MenuLateral from "../../../compartilhado/componentes/MenuLateral/MenuLateral.jsx";
-import { lerSessao } from "../../../funcionalidades/autenticacao/estado/sessao.js";
+import MenuLateral from "../../../funcionalidades/materias/ui/MenuLateral/MenuLateral.jsx";
 
 export default function PaginaHome() {
   const [menuExpandido, setMenuExpandido] = useState(true);
   const [materiaSelecionada, setMateriaSelecionada] = useState(null);
   const [temMaterias, setTemMaterias] = useState(false);
-  const sessao = lerSessao();
   const menuToggleRef = useRef(null);
 
   function toggleMenu() {

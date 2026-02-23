@@ -1,47 +1,19 @@
+import { clienteHttp } from "../../../bibliotecas/http/clienteHttpInstancia.js";
+
 const API_URL = "http://localhost:3031";
 
 export async function buscarMaterias() {
-  const resposta = await fetch(`${API_URL}/materias`);
-  if (!resposta.ok) {
-    throw new Error("Erro ao buscar matérias");
-  }
-  return resposta.json();
+  return clienteHttp.getJson(`${API_URL}/materias`);
 }
 
 export async function criarMateria(nome) {
-  const resposta = await fetch(`${API_URL}/materias`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ nome }),
-  });
-  if (!resposta.ok) {
-    throw new Error("Erro ao criar matéria");
-  }
-  return resposta.json();
+  return clienteHttp.postJson(`${API_URL}/materias`, { nome });
 }
 
 export async function atualizarMateria(id, nome) {
-  const resposta = await fetch(`${API_URL}/materias/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ nome }),
-  });
-  if (!resposta.ok) {
-    throw new Error("Erro ao atualizar matéria");
-  }
-  return resposta.json();
+  return clienteHttp.putJson(`${API_URL}/materias/${id}`, { nome });
 }
 
 export async function excluirMateria(id) {
-  const resposta = await fetch(`${API_URL}/materias/${id}`, {
-    method: "DELETE",
-  });
-  if (!resposta.ok) {
-    throw new Error("Erro ao excluir matéria");
-  }
-  return resposta.json();
+  return clienteHttp.deleteJson(`${API_URL}/materias/${id}`);
 }

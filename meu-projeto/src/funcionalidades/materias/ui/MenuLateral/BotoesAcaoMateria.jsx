@@ -1,5 +1,5 @@
-import Edit from "../Icones/Edit.jsx";
-import Trash from "../Icones/Trash.jsx";
+import Edit from "../../../../compartilhado/componentes/Icones/Edit.jsx";
+import Trash from "../../../../compartilhado/componentes/Icones/Trash.jsx";
 
 export default function BotoesAcaoMateria({ onEditar, onExcluir }) {
   return (
