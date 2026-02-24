@@ -1,5 +1,5 @@
-import Card from "../Card/Card.jsx";
-import Titulo3 from "../Tipografia/Titulo3.jsx";
+import Card from "../../../../../compartilhado/componentes/Card/Card.jsx";
+import Titulo3 from "../../../../../compartilhado/componentes/Tipografia/Titulo3.jsx";
 
 export default function Baralhos() {
   return (

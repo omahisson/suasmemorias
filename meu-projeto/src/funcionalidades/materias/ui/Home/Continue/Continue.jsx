@@ -1,4 +1,4 @@
-import Titulo2 from "../Tipografia/Titulo2.jsx";
+import Titulo2 from "../../../../../compartilhado/componentes/Tipografia/Titulo2.jsx";
 
 export default function Continue() {
   return (

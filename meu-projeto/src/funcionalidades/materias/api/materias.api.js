@@ -1,6 +1,6 @@
 import { clienteHttp } from "../../../bibliotecas/http/clienteHttpInstancia.js";
 
-const API_URL = "http://localhost:3031";
+const API_URL = "http://localhost:3032";
 
 export async function buscarMaterias() {
   return clienteHttp.getJson(`${API_URL}/materias`);

@@ -1,5 +1,5 @@
-import Titulo from "../Tipografia/Titulo.jsx";
-import PastaAberta from "../Icones/PastaAberta.jsx";
+import Titulo from "../../../../../compartilhado/componentes/Tipografia/Titulo.jsx";
+import PastaAberta from "../../../../../compartilhado/componentes/Icones/PastaAberta.jsx";
 
 export default function NomeMateria({ onToggleMenu, nomeMateria, temMaterias }) {
   const textoExibido = nomeMateria || (temMaterias ? "Selecione uma matéria" : "Crie uma matéria");

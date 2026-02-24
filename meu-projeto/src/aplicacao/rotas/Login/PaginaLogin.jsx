@@ -23,39 +23,39 @@ export default function PaginaLogin() {
       <Card>
         <form onSubmit={onSubmit} style={{ display: "flex", flexDirection: "column", gap: "14px", flex: 1 }}>
           <div>
-          <Titulo>Acesse suas memorias</Titulo>
-          <Subtitulo>Digite suas credenciais para continuar</Subtitulo>
-        </div>
+            <Titulo>Acesse suas memorias</Titulo>
+            <Subtitulo>Digite suas credenciais para continuar</Subtitulo>
+          </div>
 
-        <CampoTexto
-          rotulo="E-mail"
-          valor={email}
-          onChange={setEmail}
-          placeholder="seu@email.com"
-          disabled={carregando}
-        />
+          <CampoTexto
+            rotulo="E-mail"
+            valor={email}
+            onChange={setEmail}
+            placeholder="seu@email.com"
+            disabled={carregando}
+          />
 
-        <CampoTexto
-          rotulo="Senha"
-          valor={senha}
-          onChange={setSenha}
-          tipo="password"
-          placeholder="Digite sua senha"
-          disabled={carregando}
-        />
+          <CampoTexto
+            rotulo="Senha"
+            valor={senha}
+            onChange={setSenha}
+            tipo="password"
+            placeholder="Digite sua senha"
+            disabled={carregando}
+          />
 
-        {erro ? <Subtitulo><div style={{ color: "crimson", fontSize: 15 }}>{erro}</div></Subtitulo> : null}
+          {erro ? <Subtitulo><span style={{ color: "crimson", fontSize: 15 }}>{erro}</span></Subtitulo> : null}
 
-        <Botao type="submit" disabled={carregando}>
-          {carregando ? "Entrando..." : "Entrar"}
-        </Botao>
+          <Botao type="submit" disabled={carregando}>
+            {carregando ? "Entrando..." : "Entrar"}
+          </Botao>
 
-        <Botao
-          variante="link"
-          onClick={() => navigate("/nova-senha")}
-          disabled={carregando}
-        >
-          Esqueci minha senha
+          <Botao
+            variante="link"
+            onClick={() => navigate("/nova-senha")}
+            disabled={carregando}
+          >
+            Esqueci minha senha
           </Botao>
         </form>
       </Card>

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useMaterias } from "../../hooks/useMaterias.js";
 import { useClickFora } from "../../../../bibliotecas/hooks/useClickFora.js";
 import { useAtalhoTeclado } from "../../../../bibliotecas/hooks/useAtalhoTeclado.js";
+import { useMediaQuery } from "../../../../bibliotecas/hooks/useMediaQuery.js";
 import FolderPlus from "../../../../compartilhado/componentes/Icones/FolderPlus.jsx";
 import FormularioMateria from "./FormularioMateria.jsx";
 import ListaMaterias from "./ListaMaterias.jsx";
@@ -12,18 +13,19 @@ export default function MenuLateral({ onToggle, toggleRef, onMateriaSelecionada 
   const [editandoMateria, setEditandoMateria] = useState(null);
   const [nomeMateria, setNomeMateria] = useState("");
   const [hoverMateria, setHoverMateria] = useState(null);
-  
-  const { 
-    materias, 
-    carregando, 
-    materiaSelecionada, 
+
+  const {
+    materias,
+    carregando,
+    materiaSelecionada,
     materiaSelecionadaId,
-    criar, 
-    editar, 
-    excluir, 
-    selecionar 
+    criar,
+    editar,
+    excluir,
+    selecionar
   } = useMaterias();
 
+  const isMobile = useMediaQuery("(max-width: 767px)");
   const inputCriarRef = useRef(null);
   const inputEditarRef = useRef(null);
 
@@ -47,27 +49,37 @@ export default function MenuLateral({ onToggle, toggleRef, onMateriaSelecionada 
     }
   }, [criandoMateria, editandoMateria]);
 
+  const onMateriaSelecionadaRef = useRef(onMateriaSelecionada);
+
   useEffect(() => {
-    if (onMateriaSelecionada) {
-      onMateriaSelecionada({ 
-        materia: materiaSelecionada, 
-        temMaterias: materias.length > 0 
+    onMateriaSelecionadaRef.current = onMateriaSelecionada;
+  }, [onMateriaSelecionada]);
+
+  useEffect(() => {
+    if (onMateriaSelecionadaRef.current) {
+      onMateriaSelecionadaRef.current({
+        materia: materiaSelecionada,
+        temMaterias: materias.length > 0
       });
     }
-  }, [materiaSelecionada, materias.length, onMateriaSelecionada]);
+  }, [materiaSelecionada, materias.length]);
 
   useEffect(() => {
     if (toggleRef) {
-      toggleRef.current = toggleExpandir;
+      toggleRef.current = function toggleExpandir() {
+        setExpandido(prev => !prev);
+      };
     }
   }, [toggleRef]);
-
-  function toggleExpandir() {
-    const novoEstado = !expandido;
-    setExpandido(novoEstado);
+  
+  useEffect(() => {
     if (onToggle) {
-      onToggle(novoEstado);
+      onToggle(expandido);
     }
+  }, [expandido, onToggle]);
+  
+  function toggleExpandir() {
+    setExpandido(prev => !prev);
   }
 
   function iniciarCriarMateria() {
@@ -128,22 +140,50 @@ export default function MenuLateral({ onToggle, toggleRef, onMateriaSelecionada 
 
   const largura = expandido ? "256px" : "0px";
   const larguraMobile = "288px";
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
   return (
     <>
-      {expandido && isMobile && (
+      <style>{`
+        .menu-lateral-overlay {
+          display: none;
+        }
+        @media (max-width: 767px) {
+          .menu-lateral-overlay {
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 40;
+          }
+        }
+        .botao-nova-materia {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 12px 16px;
+          margin: 0px 8px 4px 8px;
+          border-radius: 12px;
+          border: none;
+          background-color: transparent;
+          cursor: pointer;
+          font-family: Nunito;
+          font-size: 14px;
+          font-weight: 600;
+          color: #3C3C3C;
+          transition: background-color 200ms ease-linear;
+        }
+        .botao-nova-materia:hover {
+          background-color: white;
+        }
+      `}</style>
+
+      {expandido && (
         <div
+          className="menu-lateral-overlay"
           onClick={toggleExpandir}
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            zIndex: 40,
-          }}
         />
       )}
 
@@ -189,36 +229,10 @@ export default function MenuLateral({ onToggle, toggleRef, onMateriaSelecionada 
                 dataAttribute="input-nova-materia"
                 inputRef={inputCriarRef}
               />
-            ) : editandoMateria ? (
-              <FormularioMateria
-                valor={nomeMateria}
-                onChange={setNomeMateria}
-                onSalvar={salvarMateria}
-                onCancelar={cancelarFormulario}
-                dataAttribute={`input-editar-materia-${editandoMateria}`}
-                inputRef={inputEditarRef}
-              />
             ) : (
               <button
+                className="botao-nova-materia"
                 onClick={iniciarCriarMateria}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                  padding: "12px 16px",
-                  margin: "0px 8px 4px 8px",
-                  borderRadius: "12px",
-                  border: "none",
-                  backgroundColor: "transparent",
-                  cursor: "pointer",
-                  fontFamily: "Nunito",
-                  fontSize: "14px",
-                  fontWeight: 600,
-                  color: "#3C3C3C",
-                  transition: "background-color 200ms ease-linear",
-                }}
-                onMouseEnter={(e) => e.target.style.backgroundColor = "white"}
-                onMouseLeave={(e) => e.target.style.backgroundColor = "transparent"}
               >
                 <FolderPlus width={20} height={20} cor="#58CC02" />
                 <span style={{ lineHeight: "20px", tabSize: 4 }}>Nova matéria</span>
@@ -234,6 +248,12 @@ export default function MenuLateral({ onToggle, toggleRef, onMateriaSelecionada 
                 materias={materias}
                 hoverMateria={hoverMateria}
                 materiaSelecionadaId={materiaSelecionadaId}
+                editandoMateria={editandoMateria}
+                nomeMateria={nomeMateria}
+                onNomeMateriaChange={setNomeMateria}
+                onSalvarMateria={salvarMateria}
+                onCancelarFormulario={cancelarFormulario}
+                inputEditarRef={inputEditarRef}
                 onSelecionar={selecionarMateria}
                 onMouseEnter={setHoverMateria}
                 onMouseLeave={() => setHoverMateria(null)}

@@ -1,6 +1,5 @@
 import { criarClienteHttp } from "./clienteHttp.js";
 import { lerSessao, limparSessao } from "../../funcionalidades/autenticacao/estado/sessao.js";
-import { useNavigate } from "react-router-dom";
 
 export const clienteHttp = criarClienteHttp({
   getToken: () => {

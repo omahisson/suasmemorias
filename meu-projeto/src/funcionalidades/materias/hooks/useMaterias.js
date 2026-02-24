@@ -23,15 +23,6 @@ export function useMaterias() {
     carregar();
   }, [carregar]);
 
-  useEffect(() => {
-    if (materiaSelecionadaId !== null) {
-      setMaterias(prev => prev.map(m => ({ 
-        ...m, 
-        selecionada: m.id === materiaSelecionadaId 
-      })));
-    }
-  }, [materiaSelecionadaId]);
-
   const criar = useCallback(async (nome) => {
     try {
       const materiaCriada = await criarMateria(nome.trim());

@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, forwardRef } from "react";
 
-export default function CampoTexto({
+const CampoTexto = forwardRef(function CampoTexto({
   rotulo,
   valor,
   onChange,
@@ -10,7 +10,7 @@ export default function CampoTexto({
   style = {},
   semRotulo = false,
   onKeyDown,
-}) {
+}, ref) {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
@@ -21,6 +21,7 @@ export default function CampoTexto({
         </div>
       )}
       <input
+        ref={ref}
         type={tipo}
         value={valor}
         placeholder={placeholder}
@@ -56,4 +57,6 @@ export default function CampoTexto({
       />
     </label>
   );
-}
+});
+
+export default CampoTexto;

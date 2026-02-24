@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
-import Continue from "../../../compartilhado/componentes/Continue/Continue.jsx";
-import NomeMateria from "../../../compartilhado/componentes/NomeMateria/NomeMateria.jsx";
-import Baralhos from "../../../compartilhado/componentes/Baralhos/Baralhos.jsx";
+import Continue from "../../../funcionalidades/materias/ui/Home/Continue/Continue.jsx";
+import NomeMateria from "../../../funcionalidades/materias/ui/Home/NomeMateria/NomeMateria.jsx";
+import Baralhos from "../../../funcionalidades/materias/ui/Home/Baralhos/Baralhos.jsx";
 import MenuLateral from "../../../funcionalidades/materias/ui/MenuLateral/MenuLateral.jsx";
 
 export default function PaginaHome() {
